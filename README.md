@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/brand/flowin-logo.png" alt="Flowin" width="320" />
+</p>
+
 # Flowin
 
 > **생각나면 툭. 정리는 알아서.**
@@ -35,6 +39,48 @@ Today / Focus
   ↓
 완료 / Logbook
 ```
+
+---
+
+## Product Walkthrough
+
+Flowin의 핵심 경험은 기능 목록이 아니라 하나의 작업 흐름으로 이어집니다.
+
+### 1. Home — 오늘의 흐름을 바로 시작합니다
+
+![Flowin Home](assets/screenshots/01-home.png)
+
+Quick Capture, Focus, Inbox와 프로젝트의 다음 행동을 한곳에서 확인합니다.
+
+### 2. Inbox — 생각을 먼저 담고 나중에 정리합니다
+
+![Flowin Inbox](assets/screenshots/02-inbox.png)
+
+입력할 때 분류를 요구하지 않고 원문을 보존합니다. AI가 만든 결과도 원문과 함께 검토하고 수정할 수 있습니다.
+
+### 3. Today / Focus — 지금 중요한 일에 집중합니다
+
+![Flowin Today and Focus](assets/screenshots/03-today-focus.png)
+
+Focus, 오늘 할 일, 지난 마감과 완료 항목을 실행 순서에 맞게 보여줍니다.
+
+### 4. Project Overview — 여러 프로젝트의 다음 행동을 비교합니다
+
+![Flowin Project Overview](assets/screenshots/04-project-overview.png)
+
+상태와 진행률뿐 아니라 각 프로젝트에서 바로 시작할 Next Action을 함께 보여줍니다.
+
+### 5. Project Detail — 목표에서 다음 행동까지 연결합니다
+
+![Flowin Project Detail](assets/screenshots/05-project-detail.png)
+
+프로젝트 목표, 우선순위, 진행률, Task와 최근 활동을 하나의 작업 맥락으로 연결합니다.
+
+### 6. Task + GPT — 현재 작업 맥락을 AI 요청으로 이어갑니다
+
+![Flowin Task and GPT](assets/screenshots/06-task-gpt.png)
+
+열려 있는 Task와 Project 맥락을 바탕으로 세분화, 우선순위 검토와 다음 행동 추천을 요청할 수 있습니다.
 
 ---
 
@@ -240,6 +286,7 @@ flowin-showcase/
 │   ├── product-decisions.md
 │   └── roadmap.md
 └── assets/
+    ├── brand/
     ├── screenshots/
     └── diagrams/
 ```
