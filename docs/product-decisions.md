@@ -55,7 +55,7 @@ Flowin에서 AI의 가치는 답변 생성보다 반복적인 관리 판단을 �
 ## 6. Project를 Task container가 아니라 Hub로 확장
 
 ### Decision
-Project 상세을 `Overview / Work / Records`로 나누고, 실행·계획·기록을 한 맥락에서 다룹니다.
+Project 상세를 `Overview / Work / Records`로 나누고, 실행·계획·기록을 한 맥락에서 다룹니다.
 
 ### Why
 Project에서 Task 목록만 보는 것으로는 사용자가 실제로 궁금한 세 질문에 답하기 어려웠기 때문입니다.
