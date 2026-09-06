@@ -8,7 +8,13 @@
 
 Flowin은 생각나는 내용을 가볍게 기록하고, 이를 실행 가능한 작업으로 정리해 **지금 무엇을 해야 하는지에 집중할 수 있게 만드는 AI-assisted personal work system**입니다.
 
-이 저장소는 Flowin의 **공개 제품 쇼케이스**입니다. 실제 제품 소스코드는 비공개 저장소에서 관리하며, 여기서는 제품 문제 정의, 핵심 기능, UX 흐름, 아키텍처, 설계 의사결정과 발전 방향을 공개합니다.
+이 저장소는 Flowin의 **공개 제품 쇼케이스**입니다. 실제 제품 소스코드는 비공개 저장소에서 관리하며, 여기서는 제품 문제 정의, 핵심 기능, UX 흐름, 아키텍처, 제품 의사결정과 발전 과정을 공개합니다.
+
+| Product status | Current phase | Latest major update |
+| --- | --- | --- |
+| **Closed Alpha** | **Active Dogfooding / Iteration** | **Project Hub v0.2 · 2026-09-06** |
+
+> Core product flow는 실제 사용 가능한 상태이며, 새로운 기능을 무조건 늘리기보다 **실제 사용·dogfooding·사용자 피드백에서 반복되는 마찰을 발견하고 개선하는 방식**으로 발전시키고 있습니다.
 
 ---
 
@@ -42,6 +48,36 @@ Today / Focus
 
 ---
 
+## Latest Product Updates
+
+Flowin은 실제 사용과 Closed Alpha 피드백을 기준으로 제품을 반복 개선하고 있습니다.
+
+### 2026-09-06 · Project Hub v0.2
+
+Project를 단순 Task 묶음에서 **실행·계획·기록이 연결되는 작업 Hub**로 확장했습니다.
+
+- `개요 / 작업 / 기록` 3영역으로 Project 상세 IA 재설계
+- Attention과 Next Action을 가장 먼저 보여주는 Overview
+- Work에서 `List / Board / Timeline` 제공
+- Workflow를 `Backlog → To Do → In Progress → Done`으로 정리
+- `On Hold`는 정상 Workflow 밖의 예외 상태로 분리
+- Timeline에서 Schedule / Task Deadline / Project Deadline을 서로 다른 의미로 표현
+- `계획 필요`를 통해 실행 큐에 있지만 일정이 없는 Task를 바로 확인
+- Records에서 완료 기준 / 결정 / 자료 / 활동을 분리해 관리
+- 100-Task MRP Project 기준 dogfood audit 진행
+
+### 2026-09-06 · Closed Alpha Feedback Round 4
+
+Area archive/undo, GPT 미확인 결과 식별, 개인정보 동의 흐름, Project 재진입 로딩, Quick Capture 안내 등 실제 사용자 피드백을 반영했습니다.
+
+### 2026-09-06 · Security & Operations Hardening
+
+기준 국가, 해외 일반 Web 접근 보호, Security Activity, 실패 로그인 기록, Windows Companion/API 권한 경계와 보안 이벤트 보관 정책을 강화했습니다.
+
+**[전체 Product Changelog 보기 →](docs/changelog.md)**
+
+---
+
 ## Product Walkthrough
 
 Flowin의 핵심 경험은 기능 목록이 아니라 하나의 작업 흐름으로 이어집니다.
@@ -70,11 +106,31 @@ Focus, 오늘 할 일, 지난 마감과 완료 항목을 실행 순서에 맞게
 
 상태와 진행률뿐 아니라 각 프로젝트에서 바로 시작할 Next Action을 함께 보여줍니다.
 
-### 5. Project Detail — 목표에서 다음 행동까지 연결합니다
+### 5. Project Hub — 실행, 계획, 기록을 한 맥락으로 연결합니다
+
+Project 상세는 현재 `개요 / 작업 / 기록` 구조의 Project Hub로 확장되었습니다.
+
+```text
+Overview
+└─ 지금 이 Project에서 무엇을 해야 하는가?
+
+Work
+├─ List
+├─ Board
+└─ Timeline
+   └─ 어떻게 실행하고 계획할 것인가?
+
+Records
+├─ 완료 기준
+├─ 결정
+├─ 자료
+└─ 활동
+   └─ 왜 이렇게 진행되었고 무엇이 남아 있는가?
+```
 
 ![Flowin Project Detail](assets/screenshots/05-project-detail.png)
 
-프로젝트 목표, 우선순위, 진행률, Task와 최근 활동을 하나의 작업 맥락으로 연결합니다.
+> 공개 스크린샷은 제품 변화에 맞춰 순차적으로 갱신합니다. 최신 Project Hub 구조와 변경 내역은 [Product Changelog](docs/changelog.md)에 기록합니다.
 
 ### 6. Task + GPT — 현재 작업 맥락을 AI 요청으로 이어갑니다
 
@@ -91,54 +147,35 @@ Focus, 오늘 할 일, 지난 마감과 완료 항목을 실행 순서에 맞게
 - **AI as an organizing layer** — AI는 반복적인 정리와 판단을 줄이는 보조 레이어로 사용한다.
 - **Execution over management** — Home과 Today에서는 관리보다 실행을 우선한다.
 - **Recoverable AI** — AI가 틀려도 원문을 추적하고 쉽게 수정할 수 있어야 한다.
+- **Usage-driven iteration** — 만들 수 있다는 이유보다 실제 사용에서 반복되는 문제를 우선한다.
 
 ---
 
 ## Core Experience
 
-### 1. Quick Capture & Inbox
+### Quick Capture & Inbox
 
-생각나는 내용을 별도 분류 없이 바로 기록합니다.
+생각나는 내용을 별도 분류 없이 바로 기록합니다. 원문을 보존하고, AI 또는 사용자가 이후 Task / Note / Idea 등으로 정리합니다.
 
-- 자연어 기반 빠른 입력
-- 원문 보존
-- 한 줄 / 여러 줄 Capture
-- 저장 후 Undo
-- 미정리 / 확인 필요 / 메모 / 아이디어 상태
-- Windows Quick Capture Helper
+### Today & Focus
 
-입력 단계에서는 사용자가 유형을 먼저 고르지 않고, 정리 이후 목적에 맞게 구분합니다.
+오늘 실행해야 할 작업, Focus, 지난 마감, 이번 주 후보를 실행 중심으로 좁혀 보여줍니다.
 
-### 2. Today & Focus
+### Project Hub
 
-오늘 실행해야 할 작업을 한곳에서 확인합니다.
+Project는 단순한 Task 묶음이 아니라 **“지금 무엇을 해야 하고, 어떻게 계획하며, 어떤 맥락이 남아 있는가?”**를 다룹니다.
 
-- 오늘 일정 / 오늘 마감 / 지난 마감
-- Focus 작업과 실행 순서
-- 이번 주 다음 후보
-- Upcoming / Anytime / Someday 파생 View
+- Overview: Attention / Next Action / 실행 현황 / Project context
+- Work: List / Board / Timeline
+- Workflow: Backlog / To Do / In Progress / Done + On Hold
+- Planning: Schedule / Task Deadline / Project Deadline
+- Records: Completion Criteria / Decisions / Resources / Activity
 
-### 3. Projects
+### Personal Work Hub
 
-Project는 단순한 Task 묶음보다 **“이 프로젝트에서 다음에 무엇을 해야 하는가?”**를 보여주는 데 집중합니다.
+Sidebar Quick Links, Pinned Projects, Search, Logbook 등 자주 사용하는 실행 맥락에 빠르게 접근합니다.
 
-- Project 목록 / 상세
-- Next Action
-- Area
-- 연결 Task
-- 자료 및 결정 기록
-- 고정 Project
-
-### 4. Personal Work Hub
-
-자주 사용하는 작업과 외부 리소스에 빠르게 접근합니다.
-
-- Sidebar Quick Links
-- Pinned Projects
-- Search
-- Logbook
-
-### 5. AI-assisted Organization
+### AI-assisted Organization
 
 Flowin의 AI 기능은 단순 채팅보다 **사용자의 현재 작업 맥락을 정리하고 다시 제품으로 되돌려주는 구조**를 지향합니다.
 
@@ -153,23 +190,14 @@ AI Processing
     ↓
 Task / Note / Project updates
     ↓
-Flowin Activity Log
+Flowin Activity / Traceability
 ```
-
-주요 방향:
-
-- Inbox Capture 자동 정리
-- Task / Note 생성 보조
-- 프로젝트 연결 보조
-- AI 요청 / 결과 기록
-- 관련 Capture / Task / Project 추적
-- 잘못된 분류를 수정할 수 있는 흐름
 
 ---
 
 ## Product Architecture
 
-현재 Flowin은 Next.js 기반 웹 애플리케이션으로 구성되어 있으며, 제품 로직과 데이터 접근 계층을 분리해 확장성을 확보하는 방향으로 개발하고 있습니다.
+현재 Flowin은 Next.js 기반 Web App, Supabase 기반 Data/Auth, AI integration, Windows Companion으로 구성되어 있습니다.
 
 ```text
 ┌──────────────────────────────┐
@@ -192,11 +220,13 @@ Flowin Activity Log
                ▼
 ┌──────────────────────────────┐
 │      Data / Auth Layer       │
-│   Supabase / External APIs   │
+│ Supabase / PostgreSQL / RLS  │
 └──────────────────────────────┘
 ```
 
-> 초기 버전은 Notion API를 데이터 소스로 사용했고, 이후 실제 사용자 확장을 위해 Supabase 기반 구조로 전환하고 있습니다.
+초기 버전은 Notion API를 데이터 소스로 빠르게 검증했고, 실제 사용자 확장 단계에서 Supabase 기반 구조로 전환했습니다.
+
+**[Architecture 자세히 보기 →](docs/architecture.md)**
 
 ---
 
@@ -205,73 +235,93 @@ Flowin Activity Log
 | Area | Stack |
 | --- | --- |
 | Frontend | Next.js · React · TypeScript |
-| Data / Backend | Supabase · PostgreSQL |
+| Data / Backend | Supabase · PostgreSQL · Auth · RLS |
 | AI Integration | ChatGPT · MCP / Actions · Prompt-based workflows |
 | Testing | Vitest · TypeScript Type Check · ESLint |
 | Deployment | Vercel |
-| Desktop Helper | Windows Quick Capture |
+| Desktop | Windows Companion / Quick Capture |
 
 ---
 
-## Product Decisions
+## Development Journey
 
-Flowin은 기능 수보다 **사용자가 느끼는 판단 비용과 복잡도를 줄이는 것**을 중요하게 보고 있습니다.
+```text
+Aug 2026
+Product Foundation
+Capture / Task / Today / Project
+        ↓
+Closed Alpha
+Real-user feedback rounds
+        ↓
+Platform Foundation
+Supabase / Auth / RLS / MCP / Windows Companion
+        ↓
+Security & Operations
+Security Center / Access Protection / Retention
+        ↓
+Sep 2026
+Project Hub v0.2
+        ↓
+Now
+Closed Alpha · Active Dogfooding
+```
 
-### Capture와 Task를 분리한 이유
-
-생각나는 순간부터 프로젝트·우선순위·날짜를 정하게 하면 기록 자체가 느려집니다. 따라서 원문 Capture를 먼저 보존하고, 정리된 실행 항목은 별도의 Task로 관리합니다.
-
-### AI 자동화에서 원문을 남기는 이유
-
-AI가 분류를 틀릴 수 있기 때문에 자동화 결과만 남기지 않고 **원본 Capture → 생성된 결과 → AI Activity**를 추적할 수 있도록 설계합니다.
-
-### 기능이 많아도 복잡해 보이지 않게
-
-기능을 줄이는 것만이 단순한 제품을 만드는 방법은 아니라고 보고 있습니다. 필요한 기능은 유지하되, 온보딩·정보 구조·점진적 노출을 통해 처음 사용하는 화면의 복잡도를 낮추는 방향을 선택합니다.
+Flowin은 완성 화면 한 번을 만드는 프로젝트보다 **문제 발견 → 구현 → 실제 사용 → 피드백 → 구조 재설계 → 운영 안정화**의 반복 과정을 보여주는 프로젝트입니다.
 
 ---
 
 ## Current Status
 
-**Active Development**
+**Closed Alpha · Active Dogfooding / Iteration**
 
-현재 진행 중인 주요 영역:
+현재 핵심 제품 흐름과 운영 기반은 구현되어 있습니다.
 
-- Supabase 기반 멀티유저 구조
-- Authentication / RLS
-- Admin 운영 기능
-- Inbox → AI → Task / Note 처리 흐름
-- Area / Project / Task 연결
-- Today / Planned / Calendar UX
-- Search / Logbook 고도화
-- 사용자 피드백 기반 UI 개선
+- Capture → Inbox → AI 정리 → Task / Note 흐름
+- Today / Focus / Planned / Calendar
+- Project Hub v0.2
+- Supabase multi-user / Authentication / RLS
+- Admin / onboarding
+- Search / Logbook
+- MCP / ChatGPT integration
+- Windows Companion / Microsoft Store 배포
+- Security Center 및 운영 보안 baseline
+
+이제는 기능 수를 늘리는 단계보다 **실제 사용 중 반복해서 드러나는 불편, 버그, 신뢰성 문제를 우선적으로 개선**하는 단계입니다.
 
 ---
 
 ## Roadmap
 
-### Near Term
+Roadmap은 기능 약속 목록보다 현재 제품 단계와 개선 원칙을 중심으로 관리합니다.
 
-- Capture 정리 경험 고도화
-- AI 처리 결과 조회 / 수정 UX
-- Planned / Calendar 화면 개선
-- 온보딩 개선
-- 실제 사용자 테스트 반복
+### Now
 
-### Next
+- 직접 사용과 Closed Alpha dogfooding
+- 실제 사용에서 발견되는 반복 마찰 개선
+- 회귀 버그 / 신뢰성 / UX polish
+- 보안·운영 baseline 유지
+- 제품 화면과 공개 showcase 지속 갱신
 
-- 반복 Task
-- Weekly Review
-- Note / Idea 전용 View
-- 앱 내부 AI 경험 고도화
-- MCP / ChatGPT 연동 확장
+### Exploration
 
-### Later
+Weekly Review, richer AI assistance, Semantic Search / RAG, Personalized Agent 등은 실제 사용 필요성이 확인될 때 우선순위를 정합니다.
 
-- RAG / Semantic Search
-- 자연어 기반 View
-- Resource Recommendation
-- Personalized Agent
+**[Public Roadmap 보기 →](docs/roadmap.md)**
+
+---
+
+## Product Decisions
+
+Flowin은 구현 결과뿐 아니라 **왜 그렇게 설계했는지**도 제품 산출물로 기록합니다.
+
+- Capture와 Task를 분리한 이유
+- AI 자동화에서 원문을 남기는 이유
+- Notion prototype에서 Supabase multi-user 구조로 전환한 이유
+- Project를 Task container가 아니라 실행·계획·기록 Hub로 확장한 이유
+- Next Action을 workflow status와 분리한 이유
+- 실제 사용에서 반복되는 문제를 우선하는 이유
+
+**[Product Decisions 보기 →](docs/product-decisions.md)**
 
 ---
 
@@ -284,28 +334,30 @@ flowin-showcase/
 │   ├── product-overview.md
 │   ├── architecture.md
 │   ├── product-decisions.md
-│   └── roadmap.md
+│   ├── roadmap.md
+│   └── changelog.md
 └── assets/
     ├── brand/
     ├── screenshots/
     └── diagrams/
 ```
 
-이 공개 저장소에는 소스코드 대신 **제품을 이해하는 데 필요한 정보와 시각 자료**를 중심으로 정리합니다.
+이 공개 저장소에는 소스코드 대신 **제품을 이해하는 데 필요한 정보, 시각 자료, 설계 판단과 변화 과정**을 중심으로 정리합니다.
 
 ---
 
 ## What this project demonstrates
 
-Flowin을 통해 다음 역량을 실제 제품 개발 과정에서 다루고 있습니다.
-
 - 문제 정의와 제품 기획
 - UX / 정보 구조 설계
-- Next.js 기반 웹 애플리케이션 구현
-- Supabase 기반 데이터 모델과 인증 구조
-- AI 기능을 제품 흐름에 통합하는 방법
+- Next.js 기반 Web Application 구현
+- Supabase 기반 데이터 모델·인증·권한 구조
+- AI 기능을 실제 제품 흐름에 통합하는 방법
+- Windows Companion과 Web 제품의 연결
+- 보안·운영 baseline 설계
 - 사용자 피드백 기반 반복 개선
-- 기능 확장과 복잡도 사이의 설계 의사결정
+- 기능 확장과 복잡도 사이의 제품 의사결정
+- 실제 사용 후 구조를 다시 설계하는 dogfooding 과정
 
 ---
 
@@ -314,7 +366,7 @@ Flowin을 통해 다음 역량을 실제 제품 개발 과정에서 다루고 �
 이 저장소는 **Flowin의 공개 포트폴리오 / 제품 쇼케이스**입니다.
 
 - 실제 애플리케이션 소스코드는 비공개 저장소에서 관리합니다.
-- 내부 환경 변수, 사용자 데이터, 운영 자격 증명은 공개하지 않습니다.
+- 내부 환경 변수, 사용자 데이터, 운영 자격 증명과 보안 민감 구현은 공개하지 않습니다.
 - 제품 화면과 문서는 공개 가능한 범위에서 지속적으로 업데이트합니다.
 
 ---
