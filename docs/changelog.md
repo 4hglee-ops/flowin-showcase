@@ -4,7 +4,7 @@
 
 ## 2026-09-06 — Project Hub v0.2
 
-Project 상세을 단순 Task 목록에서 **실행·계획·기록이 연결되는 Hub**로 확장했습니다.
+Project 상세를 단순 Task 목록에서 **실행·계획·기록이 연결되는 Hub**로 확장했습니다.
 
 ### Overview
 - Attention과 Next Action을 가장 먼저 표시
